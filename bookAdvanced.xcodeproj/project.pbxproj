@@ -9,20 +9,30 @@
 /* Begin PBXBuildFile section */
 		C29F6D512C5B68550081FA15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D502C5B68550081FA15 /* AppDelegate.swift */; };
 		C29F6D532C5B68550081FA15 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D522C5B68550081FA15 /* SceneDelegate.swift */; };
-		C29F6D552C5B68550081FA15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D542C5B68550081FA15 /* ViewController.swift */; };
+		C29F6D552C5B68550081FA15 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D542C5B68550081FA15 /* MainViewController.swift */; };
 		C29F6D5A2C5B68560081FA15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29F6D592C5B68560081FA15 /* Assets.xcassets */; };
 		C29F6D5D2C5B68560081FA15 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C29F6D5C2C5B68560081FA15 /* Base */; };
 		C29F6D662C5B696A0081FA15 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C29F6D652C5B696A0081FA15 /* SnapKit */; };
+		C29F6D6B2C5B6EAC0081FA15 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D6A2C5B6EAC0081FA15 /* Model.swift */; };
+		C29F6D6D2C5B6ECA0081FA15 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D6C2C5B6ECA0081FA15 /* SearchViewModel.swift */; };
+		C29F6D722C5B7E460081FA15 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D712C5B7E460081FA15 /* TabBarController.swift */; };
+		C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D732C5B85710081FA15 /* CartViewController.swift */; };
+		C29F6D762C5B8C020081FA15 /* BookInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D752C5B8C020081FA15 /* BookInfoController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C29F6D4D2C5B68550081FA15 /* bookAdvanced.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bookAdvanced.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29F6D502C5B68550081FA15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C29F6D522C5B68550081FA15 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C29F6D542C5B68550081FA15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C29F6D542C5B68550081FA15 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C29F6D592C5B68560081FA15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C29F6D5C2C5B68560081FA15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C29F6D5E2C5B68560081FA15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C29F6D6A2C5B6EAC0081FA15 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C29F6D6C2C5B6ECA0081FA15 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C29F6D712C5B7E460081FA15 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		C29F6D732C5B85710081FA15 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		C29F6D752C5B8C020081FA15 /* BookInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +68,41 @@
 			children = (
 				C29F6D502C5B68550081FA15 /* AppDelegate.swift */,
 				C29F6D522C5B68550081FA15 /* SceneDelegate.swift */,
-				C29F6D542C5B68550081FA15 /* ViewController.swift */,
+				C29F6D672C5B6B280081FA15 /* Model */,
+				C29F6D682C5B6B310081FA15 /* View */,
+				C29F6D692C5B6B370081FA15 /* ViewModel */,
 				C29F6D592C5B68560081FA15 /* Assets.xcassets */,
 				C29F6D5B2C5B68560081FA15 /* LaunchScreen.storyboard */,
 				C29F6D5E2C5B68560081FA15 /* Info.plist */,
 			);
 			path = bookAdvanced;
+			sourceTree = "<group>";
+		};
+		C29F6D672C5B6B280081FA15 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C29F6D6A2C5B6EAC0081FA15 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C29F6D682C5B6B310081FA15 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C29F6D542C5B68550081FA15 /* MainViewController.swift */,
+				C29F6D712C5B7E460081FA15 /* TabBarController.swift */,
+				C29F6D732C5B85710081FA15 /* CartViewController.swift */,
+				C29F6D752C5B8C020081FA15 /* BookInfoController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C29F6D692C5B6B370081FA15 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C29F6D6C2C5B6ECA0081FA15 /* SearchViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +181,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C29F6D552C5B68550081FA15 /* ViewController.swift in Sources */,
+				C29F6D552C5B68550081FA15 /* MainViewController.swift in Sources */,
+				C29F6D6D2C5B6ECA0081FA15 /* SearchViewModel.swift in Sources */,
+				C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */,
 				C29F6D512C5B68550081FA15 /* AppDelegate.swift in Sources */,
+				C29F6D722C5B7E460081FA15 /* TabBarController.swift in Sources */,
 				C29F6D532C5B68550081FA15 /* SceneDelegate.swift in Sources */,
+				C29F6D762C5B8C020081FA15 /* BookInfoController.swift in Sources */,
+				C29F6D6B2C5B6EAC0081FA15 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
