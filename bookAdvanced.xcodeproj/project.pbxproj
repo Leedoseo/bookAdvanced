@@ -18,6 +18,7 @@
 		C29F6D722C5B7E460081FA15 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D712C5B7E460081FA15 /* TabBarController.swift */; };
 		C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D732C5B85710081FA15 /* CartViewController.swift */; };
 		C29F6D762C5B8C020081FA15 /* BookInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D752C5B8C020081FA15 /* BookInfoController.swift */; };
+		C29F6D9A2C6078140081FA15 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		C29F6D712C5B7E460081FA15 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C29F6D732C5B85710081FA15 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		C29F6D752C5B8C020081FA15 /* BookInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfoController.swift; sourceTree = "<group>"; };
+		C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				C29F6D542C5B68550081FA15 /* MainViewController.swift */,
 				C29F6D712C5B7E460081FA15 /* TabBarController.swift */,
+				C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */,
 				C29F6D732C5B85710081FA15 /* CartViewController.swift */,
 				C29F6D752C5B8C020081FA15 /* BookInfoController.swift */,
 			);
@@ -184,6 +187,7 @@
 				C29F6D552C5B68550081FA15 /* MainViewController.swift in Sources */,
 				C29F6D6D2C5B6ECA0081FA15 /* SearchViewModel.swift in Sources */,
 				C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */,
+				C29F6D9A2C6078140081FA15 /* BookCollectionViewCell.swift in Sources */,
 				C29F6D512C5B68550081FA15 /* AppDelegate.swift in Sources */,
 				C29F6D722C5B7E460081FA15 /* TabBarController.swift in Sources */,
 				C29F6D532C5B68550081FA15 /* SceneDelegate.swift in Sources */,

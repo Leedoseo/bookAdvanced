@@ -8,185 +8,145 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MainViewController: UIViewController, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private let mainLabel = UILabel()
     private let searchBar = UISearchBar()
-    private let recentBook = UILabel()
-    private var recentView: UICollectionView!
-    private let searchResult = UILabel()
-    private var searchView: UICollectionView!
+    private var collectionView: UICollectionView!
+    private var recentCollectionView: UICollectionView!
+    private let viewModel = SearchViewModel()
     
+    // 기존 UI 요소들
+    private let mainLabel = UILabel()
+    private let recentBook = UILabel()
+    private let searchResult = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        
+        viewModel.onBooksUpdated = { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
     
     private func setupUI() {
         view.backgroundColor = .white
-      
+
+        // 메인 레이블
         view.addSubview(mainLabel)
-        
-        // 앱이름 뺄까? 고민중
         mainLabel.text = "앱 이름"
         mainLabel.textAlignment = .left
         mainLabel.textColor = .black
         mainLabel.font = UIFont.systemFont(ofSize: 28)
-        
         mainLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(30)
         }
-        
+
+        // 검색 바
         view.addSubview(searchBar)
-        
+        searchBar.delegate = self
+        searchBar.placeholder = "검색어를 입력하세요"
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(mainLabel.snp.bottom).offset(10)  // 레이블의 아래에 위치
+            $0.top.equalTo(mainLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(44)
         }
-        searchBar.backgroundImage = UIImage()
         
+        // 최근 본 책 레이블
         view.addSubview(recentBook)
-        
         recentBook.text = "최근 본 책"
         recentBook.textAlignment = .left
         recentBook.textColor = .black
         recentBook.font = UIFont.systemFont(ofSize: 28)
-        
         recentBook.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(28)
         }
         
+        // 최근 본 책 컬렉션 뷰
         let recentLayout = UICollectionViewFlowLayout()
         recentLayout.scrollDirection = .horizontal
-       
-        recentView = UICollectionView(frame: .zero, collectionViewLayout: recentLayout)
-        recentView.backgroundColor = .white
-        recentView.dataSource = self
-        recentView.delegate = self
-
-        // 해당 코드는 더미이미지가 없어서 동그라미를 생성하기 위해 GPT로 작성한 코드, LV.2로 넘어가면 삭제 예정
-        recentView.register(CircleCollectionViewCell.self, forCellWithReuseIdentifier: "circleCell")
-
-        view.addSubview(recentView)
-        
-        recentView.snp.makeConstraints {
+        recentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: recentLayout)
+        recentCollectionView.backgroundColor = .white
+        recentCollectionView.dataSource = self
+        recentCollectionView.delegate = self
+        recentCollectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "recentBookCell")
+        view.addSubview(recentCollectionView)
+        recentCollectionView.snp.makeConstraints {
             $0.top.equalTo(recentBook.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)  // 원하는 높이로 설정
+            $0.height.equalTo(150)
         }
         
+        // 검색 결과 레이블
         view.addSubview(searchResult)
-        
         searchResult.text = "검색 결과"
         searchResult.textAlignment = .left
         searchResult.textColor = .black
         searchResult.font = UIFont.systemFont(ofSize: 28)
-        
         searchResult.snp.makeConstraints {
-            $0.top.equalTo(recentView.snp.bottom).offset(30)
+            $0.top.equalTo(recentCollectionView.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(28)
         }
         
-        let searchLayout = UICollectionViewFlowLayout()
-        searchLayout.scrollDirection = .vertical // 수직 스크롤
-        
-        searchView = UICollectionView(frame: .zero, collectionViewLayout: searchLayout)
-        searchView.backgroundColor = .white
-        searchView.dataSource = self
-        searchView.delegate = self
-
-        // 해당 코드는 더미이미지가 없어서 사각형을 생성하기 위해 GPT로 작성한 코드, LV.2로 넘어가면 삭제 예정
-        // UICollectionViewCell의 커스텀 클래스인 SquareCollectionViewCell을 셀로 등록, 재사용 식별자는 "squareCell"
-        searchView.register(SquareCollectionViewCell.self, forCellWithReuseIdentifier: "squareCell")
-        
-        view.addSubview(searchView)
-        searchView.snp.makeConstraints {
+        // 검색 결과 컬렉션 뷰
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "bookCell")
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
             $0.top.equalTo(searchResult.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10) // 부모 뷰의 하단까지 확장
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
     }
     
-    // 아래 코드는 더미이미지가 없어서 일단 동그라미를 생성하기 위해 GPT로 작성한 코드, LV.2로 넘어가면 삭제 예정
-    // MARK: - UICollectionViewDataSource
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else { return }
+        viewModel.searchBooks(query: query)
+        searchBar.resignFirstResponder() // 키보드 닫기
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == recentView {
-            return 10 // 최근 본 책의 동그라미 수
-        } else if collectionView == searchView {
-            return 20 // 검색 결과 사각형 수
+        if collectionView == recentCollectionView {
+            return 10 // 예시로, 최근 본 책의 수를 10으로 설정
+        } else if collectionView == self.collectionView {
+            return viewModel.getBooks().count
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == recentView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "circleCell", for: indexPath) as! CircleCollectionViewCell
+        if collectionView == recentCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recentBookCell", for: indexPath) as! BookCollectionViewCell
+            // 예시 데이터로 셀을 구성
+            cell.configure(with: Book(title: "최근 본 책 \(indexPath.item + 1)", authors: ["저자 \(indexPath.item + 1)"], thumbnail: ""))
             return cell
-        } else if collectionView == searchView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "squareCell", for: indexPath) as! SquareCollectionViewCell
+        } else if collectionView == self.collectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as! BookCollectionViewCell
+            let book = viewModel.getBooks()[indexPath.item]
+            cell.configure(with: book)
             return cell
         }
         return UICollectionViewCell()
     }
-
-    // MARK: - UICollectionViewDelegateFlowLayout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == recentView {
-            return CGSize(width: 40, height: 40) // 동그라미 크기
-        } else if collectionView == searchView {
+        if collectionView == recentCollectionView {
+            return CGSize(width: 100, height: 150) // 최근 본 책 셀 크기
+        } else if collectionView == self.collectionView {
             let width = collectionView.frame.width
-            return CGSize(width: width, height: 80) // 사각형 크기
+            return CGSize(width: width, height: 150) // 검색 결과 사각형 크기
         }
         return CGSize.zero
-    }
-
-    // MARK: - UICollectionViewDelegate
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 셀이 선택되었을 때 모달로 열릴 뷰 컨트롤러 생성
-        let modalViewController = BookInfoController()
-
-        // 모달의 표현 스타일을 설정
-        modalViewController.modalPresentationStyle = .pageSheet
-        
-        // 모달 창 표시
-        present(modalViewController, animated: true, completion: nil)
-    }
-}
-
-// MARK: - Custom UICollectionViewCell for Circle
-// 해당 코드는 더미이미지가 없어서 동그라미를 생성하기 위해 GPT로 작성한 코드, LV.2로 넘어가면 삭제 예정
-class CircleCollectionViewCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        // 동그라미 설정
-        contentView.backgroundColor = .blue
-        contentView.layer.cornerRadius = 20 // 동그라미 모양을 위해 절반으로 설정
-        contentView.layer.masksToBounds = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: - Custom UICollectionViewCell for Square
-// 해당 코드는 더미이미지가 없어서 사각형을 생성하기 위해 GPT로 작성한 코드, LV.2로 넘어가면 삭제 예정
-class SquareCollectionViewCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        // 사각형 설정
-        contentView.backgroundColor = .red
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
