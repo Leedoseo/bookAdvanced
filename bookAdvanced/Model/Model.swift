@@ -10,7 +10,9 @@ import Foundation
 struct Book: Codable {
     let title: String
     let authors: [String]
+    let contents: String?  // Optional로 변경
     let thumbnail: String
+    let price: Int?
 }
 
 struct BookResponse: Codable {

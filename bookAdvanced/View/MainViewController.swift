@@ -8,17 +8,19 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MainViewController: UIViewController, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BookInfoControllerDelegate {
     
     private let searchBar = UISearchBar()
     private var collectionView: UICollectionView!
-    private var recentCollectionView: UICollectionView!
+    private let recentBooksViewController = RecentBooksController() // 최근 본 책 뷰 컨트롤러 추가
+    
     private let viewModel = SearchViewModel()
     
-    // 기존 UI 요소들
     private let mainLabel = UILabel()
     private let recentBook = UILabel()
     private let searchResult = UILabel()
+    
+    var cartViewController: CartViewController? // CartViewController 인스턴스를 참조하기 위해 사용
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,20 +69,15 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
             $0.height.equalTo(28)
         }
         
-        // 최근 본 책 컬렉션 뷰
-        let recentLayout = UICollectionViewFlowLayout()
-        recentLayout.scrollDirection = .horizontal
-        recentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: recentLayout)
-        recentCollectionView.backgroundColor = .white
-        recentCollectionView.dataSource = self
-        recentCollectionView.delegate = self
-        recentCollectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "recentBookCell")
-        view.addSubview(recentCollectionView)
-        recentCollectionView.snp.makeConstraints {
+        // 최근 본 책 컬렉션 뷰 컨트롤러 추가
+        addChild(recentBooksViewController)
+        view.addSubview(recentBooksViewController.view)
+        recentBooksViewController.view.snp.makeConstraints {
             $0.top.equalTo(recentBook.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(150)
         }
+        recentBooksViewController.didMove(toParent: self)
         
         // 검색 결과 레이블
         view.addSubview(searchResult)
@@ -89,7 +86,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         searchResult.textColor = .black
         searchResult.font = UIFont.systemFont(ofSize: 28)
         searchResult.snp.makeConstraints {
-            $0.top.equalTo(recentCollectionView.snp.bottom).offset(30)
+            $0.top.equalTo(recentBooksViewController.view.snp.bottom).offset(30)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(28)
         }
@@ -117,36 +114,44 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == recentCollectionView {
-            return 10 // 예시로, 최근 본 책의 수를 10으로 설정
-        } else if collectionView == self.collectionView {
-            return viewModel.getBooks().count
-        }
-        return 0
+        return viewModel.getBooks().count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == recentCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recentBookCell", for: indexPath) as! BookCollectionViewCell
-            // 예시 데이터로 셀을 구성
-            cell.configure(with: Book(title: "최근 본 책 \(indexPath.item + 1)", authors: ["저자 \(indexPath.item + 1)"], thumbnail: ""))
-            return cell
-        } else if collectionView == self.collectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as! BookCollectionViewCell
-            let book = viewModel.getBooks()[indexPath.item]
-            cell.configure(with: book)
-            return cell
-        }
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as! BookCollectionViewCell
+        let book = viewModel.getBooks()[indexPath.item]
+        cell.configure(with: book) // 검색 결과 전용 설정
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedBook = viewModel.getBooks()[indexPath.item]
+        
+        // 최근 본 책 추가
+        recentBooksViewController.updateWithBook(selectedBook)
+
+        // BookInfoController 인스턴스를 생성하고 선택된 책 정보를 전달
+        let modalViewController = BookInfoController()
+        modalViewController.book = selectedBook
+        modalViewController.delegate = self
+        
+        // 모달의 표현 스타일을 설정하고, 모달 창을 표시
+        modalViewController.modalPresentationStyle = .pageSheet
+        present(modalViewController, animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == recentCollectionView {
-            return CGSize(width: 100, height: 150) // 최근 본 책 셀 크기
-        } else if collectionView == self.collectionView {
-            let width = collectionView.frame.width
-            return CGSize(width: width, height: 150) // 검색 결과 사각형 크기
-        }
-        return CGSize.zero
+        let width = collectionView.frame.width
+        return CGSize(width: width, height: 150) // 검색 결과 사각형 크기
+    }
+
+    func didAddBook(_ book: Book) {
+        cartViewController?.addBookToCart(book)
+        // 알림 창을 제거하여, 이 메서드는 단순히 책을 장바구니에 추가하는 역할만 합니다.
+    }
+    
+    // 검색 바를 활성화하는 메서드
+    func activateSearchBar() {
+        searchBar.becomeFirstResponder() // 서치바를 활성화
     }
 }

@@ -19,6 +19,9 @@
 		C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D732C5B85710081FA15 /* CartViewController.swift */; };
 		C29F6D762C5B8C020081FA15 /* BookInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D752C5B8C020081FA15 /* BookInfoController.swift */; };
 		C29F6D9A2C6078140081FA15 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */; };
+		C29F6D9C2C637B210081FA15 /* CartBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D9B2C637B210081FA15 /* CartBookCell.swift */; };
+		C29F6D9E2C64B1050081FA15 /* RecentBooksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D9D2C64B1050081FA15 /* RecentBooksModel.swift */; };
+		C29F6DA02C64B11B0081FA15 /* RecentBooksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29F6D9F2C64B11B0081FA15 /* RecentBooksController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		C29F6D732C5B85710081FA15 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		C29F6D752C5B8C020081FA15 /* BookInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfoController.swift; sourceTree = "<group>"; };
 		C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
+		C29F6D9B2C637B210081FA15 /* CartBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBookCell.swift; sourceTree = "<group>"; };
+		C29F6D9D2C64B1050081FA15 /* RecentBooksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentBooksModel.swift; sourceTree = "<group>"; };
+		C29F6D9F2C64B11B0081FA15 /* RecentBooksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentBooksController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				C29F6D6A2C5B6EAC0081FA15 /* Model.swift */,
+				C29F6D9D2C64B1050081FA15 /* RecentBooksModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -96,6 +103,8 @@
 				C29F6D992C6078140081FA15 /* BookCollectionViewCell.swift */,
 				C29F6D732C5B85710081FA15 /* CartViewController.swift */,
 				C29F6D752C5B8C020081FA15 /* BookInfoController.swift */,
+				C29F6D9B2C637B210081FA15 /* CartBookCell.swift */,
+				C29F6D9F2C64B11B0081FA15 /* RecentBooksController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,12 +193,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29F6DA02C64B11B0081FA15 /* RecentBooksController.swift in Sources */,
 				C29F6D552C5B68550081FA15 /* MainViewController.swift in Sources */,
+				C29F6D9E2C64B1050081FA15 /* RecentBooksModel.swift in Sources */,
 				C29F6D6D2C5B6ECA0081FA15 /* SearchViewModel.swift in Sources */,
 				C29F6D742C5B85710081FA15 /* CartViewController.swift in Sources */,
 				C29F6D9A2C6078140081FA15 /* BookCollectionViewCell.swift in Sources */,
 				C29F6D512C5B68550081FA15 /* AppDelegate.swift in Sources */,
 				C29F6D722C5B7E460081FA15 /* TabBarController.swift in Sources */,
+				C29F6D9C2C637B210081FA15 /* CartBookCell.swift in Sources */,
 				C29F6D532C5B68550081FA15 /* SceneDelegate.swift in Sources */,
 				C29F6D762C5B8C020081FA15 /* BookInfoController.swift in Sources */,
 				C29F6D6B2C5B6EAC0081FA15 /* Model.swift in Sources */,
