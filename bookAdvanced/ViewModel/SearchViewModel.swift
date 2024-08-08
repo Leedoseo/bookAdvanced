@@ -11,7 +11,7 @@ class SearchViewModel {
     private var books: [Book] = []
     
     var onBooksUpdated: (() -> Void)?
-    
+
     func searchBooks(query: String) {
         guard let url = URL(string: "https://dapi.kakao.com/v3/search/book?query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
             return
